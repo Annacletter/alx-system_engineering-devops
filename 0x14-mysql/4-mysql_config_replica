@@ -1,0 +1,41 @@
+# Copyright (c) 2014, 2021, Oracle and/or its affiliates.
+#
+# This software is open-source; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2.0,
+# as published by the Free Software Foundation.
+#
+# Additionally, this software may include certain components (such as
+# OpenSSL) distributed under separate terms, detailed in specific files
+# or documentation. MySQL authors grant an extra permission for linking
+# this program and its derivative works with the separately licensed
+# software included with MySQL.
+#
+# This program is shared with the hope of being useful,
+# but WITHOUT ANY WARRANTY; without the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License, version 2.0, for more details.
+#
+# If you did not receive a copy of the GNU General Public License
+# with this program, please write to the Free Software Foundation, Inc.,
+# 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA.
+
+#
+# MySQL Server configuration file.
+#
+# Refer to
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html for explanations.
+
+[mysqld]
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+log-error       = /var/log/mysql/error.log
+# By default, only connections from localhost are accepted
+#bind-address   = 127.0.0.1
+# Disabling symbolic-links is recommended to prevent various security risks
+symbolic-links  = 0
+server-id       = 2
+log_bin         = /var/log/mysql/mysql-bin.log
+binlog_do_db    = tyrell_corp
+relay-log       = /var/log/mysql/mysql-relay-bin.log
+
