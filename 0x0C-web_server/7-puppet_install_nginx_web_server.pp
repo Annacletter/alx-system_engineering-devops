@@ -1,5 +1,3 @@
-
-  
 # Install NginX
 # With puppet
 
