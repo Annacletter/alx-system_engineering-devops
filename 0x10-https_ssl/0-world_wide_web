@@ -1,20 +1,15 @@
 #!/usr/bin/env bash
-# Bash script displays DNS records: record type, IP, subdomains
-
-print_record ()
-{
-    printf "The subdomain %s is a " "$2"
-    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $4 }'
-    printf " record and points to "
-    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $5 }'
-    echo ""
+# Digging subdomains to see where they point
+# shellcheck disable=SC2086
+domain_display () {
+	if [ "$#" -eq 1 ]
+	then
+		dig www."$1" | grep -e ^www | awk '{print "The subdomain www is a", $4, "record and points to", $5}'
+		dig lb-01."$1" | grep -e ^lb-01 | awk '{print "The subdomain lb-01 is a", $4, "record and points to", $5}'
+		dig web-01."$1" | grep -e ^web-01 | awk '{print "The subdomain web-01 is a", $4, "record and points to", $5}'
+		dig web-02."$1" | grep -e ^web-02 | awk '{print "The subdomain web-02 is a", $4, "record and points to", $5}'
+	else
+		dig "$2"."$1" | grep -e ^"$2" | awk '{print "The subdomain '$2' is a", $4, "record and points to", $5}'
+	fi
 }
-
-if [ -z "$2" ]; then
-   for subs in "www" "lb-01" "web-01" "web-02"
-   do
-       print_record "$1" "$subs"
-   done
-else
-    print_record "$1" "$2"
-fi
+domain_display $1 $2
