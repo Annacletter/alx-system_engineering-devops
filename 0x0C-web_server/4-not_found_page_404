@@ -4,7 +4,7 @@
 sudo apt-get -y update
 sudo apt-get -y install nginx
 
-echo "Hello World" | sudo tee /var/www/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
 string_for_replacement="server_name_;\n\trewrite ^\/redirect_me https:\/\/github.com\/Annacletter permanent;"
 
