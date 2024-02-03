@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
-#Setting up redirect
-apt-get -y update
-apt-get -y install nginx
-sed -i "30i \\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
-echo "Ceci n'est pas une page" > /usr/share/nginx/html/404.html
-error_replace="#error_page"
-error_string="error_page"
-sed -i "s/$error_replace/$error_string/\n" /etc/nginx/sites-available/default
-service nginx restart
+#Setting up 404 error page
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+echo "Hello World" | sudo tee /var/www/html/index.html
+
+string_for_replacement="server_name_;\n\trewrite ^\/redirect_me https:\/\/github.com\/Annacletter permanent;"
+
+sudo sed -i "s/server_name-;/$string_for_replacement/"  /etc/nginx/sites-enabled/default
+
+#creating 404 error page
+
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+string_for_replace="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\troot \/var/www/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server-;/$string_for_replace/"  /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
