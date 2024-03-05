@@ -9,7 +9,7 @@ import requests
 def top_ten(subreddit):
     """
     Function that queries the Reddit API and prints the titles of the first 10 hot posts.
-    
+
     :param subreddit: The subreddit for which to retrieve the top posts.
     """
     url = f"https://api.reddit.com/r/{subreddit}?sort=hot&limit=10"
@@ -27,4 +27,3 @@ def top_ten(subreddit):
             print(post.get("data").get("title"))
     else:
         print(None)
-

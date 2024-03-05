@@ -8,7 +8,7 @@ import requests
 def fetch_hot_articles(subreddit, hot_list=[]):
     """
         Recursive function to retrieve hot articles from a given subreddit using the Reddit API.
-        
+
         :param subreddit: The name of the subreddit to fetch hot articles from.
         :param hot_list: A list containing the titles of hot articles (optional).
         :return: A list containing the titles of hot articles.
@@ -25,7 +25,7 @@ def fetch_hot_articles(subreddit, hot_list=[]):
 
     if response.status_code != 200:
         return None
-    
+
     json_response = response.json()
     if 'data' in json_response:
         data = json_response.get("data")
@@ -42,4 +42,3 @@ def fetch_hot_articles(subreddit, hot_list=[]):
         return hot_list
     else:
         return None
-

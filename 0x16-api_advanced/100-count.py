@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """A script for analyzing word frequency in the titles of hot posts on Reddit."""
 
+
 def count_words(subreddit, word_list, word_count={}, after=None):
     """Queries the Reddit API to count occurrences of words from word_list in
     the titles of all hot posts from a given subreddit."""
@@ -51,4 +52,3 @@ def count_words(subreddit, word_list, word_count={}, after=None):
         # Recursive call to fetch and count words from the next page
         return count_words(subreddit, word_list, word_count,
                            info.get("data").get("after"))
-
