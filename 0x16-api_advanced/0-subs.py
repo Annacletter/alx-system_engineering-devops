@@ -1,20 +1,16 @@
 #!/usr/bin/python3
 """
-    Script for querying the Reddit API to fetch the number of subscribers for a given subreddit.
-"""
-
-import requests
+    Script for querying the Reddit API to fetch the number
 
 
 def number_of_subscribers(subreddit):
     """
-    Function to query the Reddit API and return the number of subscribers for a subreddit.
-
+    Function to query the Reddit API and return the number of subscriber
     Args:
         subreddit (str): The name of the subreddit to query.
 
     Returns:
-        int: The number of subscribers of the subreddit, or 0 if the subreddit does not exist or if an error occurs.
+        int: The number of subscribers of the subreddit.
     """
     # Construct the URL for the subreddit's information
     url = "https://api.reddit.com/r/{}/about".format(subreddit)
