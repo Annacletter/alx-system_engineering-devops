@@ -1,0 +1,100 @@
+# To gain a comprehensive understanding of Nginx configuration files and fully utilize Nginx's capabilities, it's recommended to explore the following URLs:
+# - http://wiki.nginx.org/Pitfalls
+# - http://wiki.nginx.org/QuickStart
+# - http://wiki.nginx.org/Configuration
+#
+# Typically, you'd relocate this file and start with a fresh one, while keeping this for reference. Alternatively, you can disable it in sites-enabled.
+#
+# For more detailed examples, please refer to /usr/share/doc/nginx-doc/examples/.
+##
+
+# Default server configuration
+#
+server {
+        listen 80 default_server;
+        rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        listen [::]:80 default_server;
+
+        # SSL configuration
+        #
+        # listen 443 ssl default_server;
+        # listen [::]:443 ssl default_server;
+        #
+        # Note: Gzip should be disabled for SSL traffic.
+        # See: https://bugs.debian.org/773332
+        #
+        # Familiarize yourself with ssl_ciphers to ensure a secure setup.
+        # See: https://bugs.debian.org/765782
+        #
+        # Avoid using self-signed certs from the ssl-cert package in production servers!
+        #
+        # include snippets/snakeoil.conf;
+
+        root /var/www/html;
+
+        # If you're using PHP, add index.php to the list
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name localhost;
+        error_page 404 /custom_404.html;
+        location = /custom_404.html {
+                root /var/www/html;
+                internal;
+        }
+
+        location /hbnb_static {
+                 alias /data/web_static/current/;
+        }
+
+        location /airbnb-onepage/ {
+                include proxy_params;
+                proxy_pass http://127.0.0.1:5000;
+        }
+
+	location /airbnb-dynamic/number_odd_or_even/ {
+                proxy_pass http://127.0.0.1:5001/number_odd_or_even/;
+        }
+
+        location / {
+                # Attempt to serve the request as a file, then
+                # as a directory, and if all fails, display a 404.
+                try_files $uri $uri/ =404;
+        }
+	# Pass PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #       include snippets/fastcgi-php.conf;
+        #
+        #       # With php7.0-cgi alone:
+        #       fastcgi_pass 127.0.0.1:9000;
+        #       # With php7.0-fpm:
+        #       fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        #}
+
+        # Deny access to .htaccess files if Apache's document root
+        # matches nginx's document root
+        #
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+
+# Virtual Host configuration for example.com
+#
+# You can relocate this to a different file under sites-available/ and symlink it
+# to sites-enabled/ to activate it.
+#
+#server {
+#       listen 80;
+#       listen [::]:80;
+#
+#       server_name example.com;
+#
+#       root /var/www/example.com;
+#       index index.html;
+#
+#       location / {
+#               try_files $uri $uri/ =404;
+#       }
+#}
+
