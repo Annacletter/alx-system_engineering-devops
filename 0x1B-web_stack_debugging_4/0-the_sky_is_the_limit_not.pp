@@ -1,13 +1,12 @@
-# Amount of traffic an Nginx server can handle.
-
-# ULIMIT of the default file
-exec { 'fix--for-nginx':
-  command => 'sed -i "s/15/4096/" /etc/default/nginx',
-  path    => '/usr/local/bin/:/bin/'
-} ->
+# Adjust ULIMIT for Nginx
+exec { 'adjust-nginx-ulimit':
+  command => 'sed -i "s/some_parameter/new_value/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/',
+}
 
 # Restart Nginx
-exec { 'nginx-restart':
-  command => 'nginx restart',
-  path    => '/etc/init.d/'
+service { 'nginx':
+  ensure    => 'running',
+  enable    => true,
+  subscribe => Exec['adjust-nginx-ulimit'],
 }
