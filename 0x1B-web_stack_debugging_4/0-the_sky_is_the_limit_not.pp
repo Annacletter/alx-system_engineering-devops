@@ -1,13 +1,12 @@
 # Adjust ULIMIT for Nginx
 exec { 'adjust-nginx-ulimit':
-  command => 'sed -i "s/worker_connections\s*\(.*\);/worker_connections 100;/g" /etc/nginx/nginx.conf',
-  path    => ['/usr/local/bin', '/bin', '/usr/bin'],
-  notify  => Service['nginx'],
+  command => 'sed -i "s/some_parameter/new_value/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/',
 }
 
-# Restart Nginx when the configuration changes
+# Restart Nginx
 service { 'nginx':
   ensure    => 'running',
   enable    => true,
-  subscribe => File['/etc/nginx/nginx.conf'],
+  subscribe => Exec['adjust-nginx-ulimit'],
 }
