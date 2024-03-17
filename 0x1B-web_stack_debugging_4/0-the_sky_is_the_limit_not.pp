@@ -8,5 +8,4 @@ exec { 'adjust-nginx-ulimit':
 service { 'nginx':
   ensure    => 'running',
   enable    => true,
-  subscribe => Exec['adjust-nginx-ulimit'],
 }
