@@ -4,7 +4,7 @@
 # Usage: ./check_datadog_host_exists.sh <host_name>
 
 # Check if the correct number of arguments is provided
-if [ $# -ne 1 ]; then
+if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <host_name>"
     exit 1
 fi
