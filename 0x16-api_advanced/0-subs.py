@@ -7,19 +7,16 @@ import requests
 
 def number_of_subscribers(subreddit):
     """
-        Queries the Reddit API and returns the number
-        of subscribers for a given subreddit.
+        Queries the Reddit API and returns "OK" if the subreddit exists, otherwise "KO".
         @param subreddit: Name of the subreddit
-        @return: Number of subscribers, or "KO" if subreddit not found or error
+        @return: "OK" if subreddit exists, "KO" otherwise
     """
     url = f"https://api.reddit.com/r/{subreddit}/about"
     headers = {'User-Agent': 'CustomClient/1.0'}
 
     try:
         response = requests.get(url, headers=headers, allow_redirects=False)
-        response.raise_for_status()  # Raise error for bad status codes
-        data = response.json()
-        if 'data' in data:
+        if response.status_code == 200:
             return "OK"
         else:
             return "KO"
@@ -34,5 +31,4 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please pass an argument for the subreddit to search.")
     else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
-
+        print(number_of_subscribers(sys.argv[1]))
