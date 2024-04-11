@@ -7,7 +7,7 @@ import requests
 
 def number_of_subscribers(subreddit):
     """
-        Queries the Reddit API and returns "OK" if the subreddit exists, otherwise "KO".
+        Queries Reddit API and returns "OK" if the subreddit exists,else "KO".
         @param subreddit: Name of the subreddit
         @return: "OK" if subreddit exists, "KO" otherwise
     """
